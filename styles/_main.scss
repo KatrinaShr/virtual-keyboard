@@ -1,6 +1,6 @@
 .container {
   width: 870px;
-  padding: 0 18px;
+  padding: 0 20px;
   margin: 0 auto;
   box-sizing: border-box;
   display: flex; 
@@ -44,6 +44,14 @@
     cursor: pointer;
     background-color: slategray;
   }
+
+  &.active {
+    background-color: rgb(126, 196, 149);
+  }
+}
+
+.special-key {
+  background-color: rgb(112, 128, 144, 0.14);
 }
 
 .textarea {
@@ -54,17 +62,45 @@
   display: none;
 }
 
-.digit0_13 {
+.Backspace {
   min-width: 96px;
 }
 
-.digit2_0,
-.digit2_12,
-.digit3_0,
-.digit3_12 {
+.CapsLock,
+.Enter,
+.ShiftLeft,
+.ShiftRight {
   min-width: 96px;
 }
 
-.digit4_3 {
+.Space {
   min-width: 374px;
+}
+
+.ArrowUp {
+  background-image: url(../assets/png/icon-up-arrow.png);
+  background-size: 14px, cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.ArrowDown {
+  background-image: url(../assets/png/icon-down-arrow.png);
+  background-size: 14px, cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.ArrowLeft {
+  background-image: url(../assets/png/icon-left-arrow.png);
+  background-size: 14px, cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.ArrowRight {
+  background-image: url(../assets/png/icon-right-arrow.png);
+  background-size: 14px, cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
