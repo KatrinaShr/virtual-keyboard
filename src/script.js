@@ -1,8 +1,7 @@
 import letters from './letters.js';
 
-// window.addEventListener('keydown', (event) => console.log(event));
 const langList = ['en', 'ru'];
-let lang = 'en';
+let lang = localStorage.getItem('lang') ? localStorage.getItem('lang') : 'en';
 let variantsImgKey = 'caseDown';
 
 // save names in local storage
@@ -257,7 +256,6 @@ function operationUpDownLeftRight(code, posStart, posEnd) {
 function processingKey() {
   const posStart = textarea.selectionStart;
   const posEnd = textarea.selectionEnd;
-  let arr = [];
 
   const code = this.getAttribute('id');
   const keyDownDiv = document.querySelector(`.${code}`);
