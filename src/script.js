@@ -100,7 +100,7 @@ function initKeyboard() {
 
   const addlanguage = document.createElement('p');
   addlanguage.classList.add('language');
-  addlanguage.innerHTML = 'To switch the language combination: <strong> left shift + alt</strong>.';
+  addlanguage.innerHTML = 'To switch the language combination: <strong> left ctrl + alt</strong>.';
   document.querySelector('section').append(addlanguage);
 }
 
