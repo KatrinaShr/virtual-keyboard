@@ -1,6 +1,5 @@
 const letters = [
-  [{ 
-    en: '`', ru: 'ё', caseUpEn: '~', caseUpRu: 'Ё', className: 'Backquote' },
+  [{  en: '`', ru: 'ё', caseUpEn: '~', caseUpRu: 'Ё', className: 'Backquote' },
     { en: '1', ru: '1', caseUpEn: '!', caseUpRu: '!', className: 'Digit1' },
     { en: '2', ru: '2', caseUpEn: '@', caseUpRu: '"', className: 'Digit2' },
     { en: '3', ru: '3', caseUpEn: '#', caseUpRu: '№', className: 'Digit3' },
