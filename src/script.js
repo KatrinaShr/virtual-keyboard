@@ -1,8 +1,9 @@
 import letters from './letters.js';
 
+// window.addEventListener('keydown', (event) => console.log(event));
 const langList = ['en', 'ru'];
 let lang = 'en';
-const variantsImgKey = 'caseDown';
+let variantsImgKey = 'caseDown';
 
 // save names in local storage
 function setLocalStorage() {
@@ -64,6 +65,10 @@ function initKeyboard() {
           const addSpanCaps = document.createElement('span');
           const addSpanShiftCaps = document.createElement('span');
 
+          if (lettersItem.classNameSpecial) {
+            addKey.classList.add(lettersItem.classNameSpecial);
+          }
+
           addSpanContainer.classList.add(`${langList[y]}`);
           addSpanCaseDown.innerText = lettersItem[langList[y]];
           addSpanCaseDown.classList.add('caseDown');
@@ -71,7 +76,7 @@ function initKeyboard() {
           addSpanCaseUp.innerText = lettersItem[`caseUp${langList[y][0].toUpperCase() + langList[y].slice(1)}`];
           addSpanCaseUp.classList.add('caseUp');
 
-          addSpanCaps.innerText = addSpanCaseDown.innerText.toUpperCase();
+          addSpanCaps.innerText = addKey.classList.contains('special-key') ? addSpanCaseDown.innerText : addSpanCaseDown.innerText.toUpperCase();
           addSpanCaps.classList.add('caps');
 
           addSpanShiftCaps.innerText = addSpanCaseUp.innerText.toLowerCase();
@@ -82,10 +87,6 @@ function initKeyboard() {
           addSpanContainer.appendChild(addSpanCaseUp);
           addSpanContainer.appendChild(addSpanCaps);
           addSpanContainer.appendChild(addSpanShiftCaps);
-        }
-
-        if (lettersItem.classNameSpecial) {
-          addKey.classList.add(lettersItem.classNameSpecial);
         }
       }
     });
@@ -103,7 +104,7 @@ function initKeyboard() {
   document.querySelector('section').append(addlanguage);
 }
 
-function showNamesKey(event) {
+function showNamesKey() {
   const enItems = document.querySelectorAll('.en');
   const ruItems = document.querySelectorAll('.ru');
   const caseDown = document.querySelectorAll(`.${lang} .caseDown`);
@@ -180,11 +181,11 @@ const textarea = document.querySelector('textarea');
 const key = document.querySelectorAll('.key');
 
 key.forEach((element) => {
-  element.addEventListener('mousedown', function (event) {
+  element.addEventListener('mousedown', function () {
     processingKey.call(this);
   });
 
-  element.addEventListener('mouseup', (event) => {
+  element.addEventListener('mouseup', () => {
     textarea.focus();
   });
 });
@@ -199,22 +200,22 @@ document.addEventListener('keyup', (event) => {
 });
 
 // processing press key
-function removeLastChar() {
-  const posStart = textarea.selectionStart;
-  const posEnd = textarea.selectionEnd;
+function operationBackspace(posStart, posEnd) {
   if (textarea.value) {
     if (posStart !== posEnd) {
       textarea.value = textarea.value.slice(0, posStart) + textarea.value.slice(posEnd);
+      textarea.selectionStart = posStart;
+      textarea.selectionEnd = posStart;
     } else {
-      textarea.value = textarea.value.slice(0, -1);
+      textarea.value = textarea.value.slice(0, posStart - 1) + textarea.value.slice(posEnd);
+      textarea.selectionStart = posStart - 1;
+      textarea.selectionEnd = posStart - 1;
     }
   }
 }
 
-function removeNextChar() {
+function operationDelete(posStart, posEnd) {
   if (textarea.value) {
-    const posStart = textarea.selectionStart;
-    const posEnd = textarea.selectionEnd;
     if (posStart !== posEnd) {
       textarea.value = textarea.value.slice(0, posStart) + textarea.value.slice(posEnd);
     } else {
@@ -226,7 +227,56 @@ function removeNextChar() {
   }
 }
 
+function operationEnter(posStart, posEnd) {
+  if (textarea.value) {
+    if (posStart !== posEnd) {
+      textarea.value = `${textarea.value.slice(0, posStart)}\r\n${textarea.value.slice(posEnd)}`;
+    } else {
+      textarea.value = `${textarea.value.slice(0, posStart)}\r\n${textarea.value.slice(posStart)}`;
+    }
+
+    textarea.selectionStart = posStart + 1;
+    textarea.selectionEnd = posStart + 1;
+  }
+}
+
+function operationSpace(posStart, posEnd) {
+  if (textarea.value) {
+    if (posStart !== posEnd) {
+      textarea.value = `${textarea.value.slice(0, posStart)} ${textarea.value.slice(posEnd)}`;
+    } else {
+      textarea.value = `${textarea.value.slice(0, posStart)} ${textarea.value.slice(posStart)}`;
+    }
+    textarea.selectionStart = `${posStart + 1}`;
+    textarea.selectionEnd = `${posStart + 1}`;
+  }
+}
+
+function operationTab(posStart, posEnd) {
+  if (textarea.value) {
+    if (posStart !== posEnd) {
+      textarea.value = `${textarea.value.slice(0, posStart)}\u0009${textarea.value.slice(posEnd)}`;
+    } else {
+      textarea.value = `${textarea.value.slice(0, posStart)}\u0009${textarea.value.slice(posStart)}`;
+    }
+    textarea.selectionStart = posStart + 1;
+    textarea.selectionEnd = posStart + 1;
+  }
+}
+
+function operationUpDownLeftRight(code, posStart, posEnd) {
+  if (code === 'ArrowUp') { textarea.value = `${textarea.value.slice(0, posStart)}\u25B2${textarea.value.slice(posStart)}`; }
+  if (code === 'ArrowDown') { textarea.value = `${textarea.value.slice(0, posStart)}\u25BC${textarea.value.slice(posStart)}`; }
+  if (code === 'ArrowLeft') { textarea.value = `${textarea.value.slice(0, posStart)}\u25C0${textarea.value.slice(posStart)}`; }
+  if (code === 'ArrowRight') { textarea.value = `${textarea.value.slice(0, posStart)}\u25B6${textarea.value.slice(posStart)}`; }
+  textarea.selectionStart = posStart + 1;
+  textarea.selectionEnd = posStart + 1;
+}
+
 function processingKey() {
+  const posStart = textarea.selectionStart;
+  const posEnd = textarea.selectionEnd;
+
   const code = this.getAttribute('id');
   const keyDownDiv = document.querySelector(`.${code}`);
   const keyDown = document.querySelector(`.${code} .${lang} .${variantsImgKey}`);
@@ -238,9 +288,25 @@ function processingKey() {
   textarea.focus();
 
   if (code === 'Backspace') {
-    removeLastChar();
+    operationBackspace(posStart, posEnd);
   } else if (code === 'Delete') {
-    removeNextChar();
+    operationDelete(posStart, posEnd);
+  } else if (code === 'Enter') {
+    operationEnter(posStart, posEnd);
+  } else if (code === 'Space') {
+    operationSpace(posStart, posEnd);
+  } else if (code === 'CapsLock') {
+    if (variantsImgKey === 'caps') {
+      variantsImgKey = 'caseDown';
+      keyDownDiv.classList.remove('active');
+    } else {
+      variantsImgKey = 'caps';
+    }
+    showNamesKey();
+  } else if (code === 'Tab') {
+    operationTab(posStart, posEnd);
+  } else if (code === 'ArrowUp' || code === 'ArrowDown' || code === 'ArrowLeft' || code === 'ArrowRight') {
+    operationUpDownLeftRight(code, posStart, posEnd);
   }
 
   if (!document.querySelector(`.${code}`).classList.contains('special-key')) {
@@ -248,10 +314,8 @@ function processingKey() {
   }
 
   setTimeout(() => {
-    if (keyDownDiv.classList.contains('active')) {
+    if (keyDownDiv.classList.contains('active') && code !== 'CapsLock') {
       keyDownDiv.classList.remove('active');
     }
   }, 300);
 }
-
-// window.addEventListener('click', (event) => console.log(event));
