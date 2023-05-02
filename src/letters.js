@@ -61,7 +61,7 @@ const letters = [
   [{ en: 'Ctrl', ru: 'Ctrl', caseUpEn: 'Ctrl', caseUpRu: 'Ctrl', className: 'ControlLeft', classNameSpecial: 'special-key' },
     { en: 'Win', ru: 'Win', caseUpEn: 'Win', caseUpRu: 'Win', className: 'MetaLeft', classNameSpecial: 'special-key' },
     { en: 'Alt', ru: 'Alt', caseUpEn: 'Alt', caseUpRu: 'Alt', className: 'AltLeft', classNameSpecial: 'special-key' },
-    { en: ' ', ru: ' ', caseUpEn: '', caseUpRu: '', className: 'Space' },
+    { en: '', ru: '', caseUpEn: '', caseUpRu: '', className: 'Space' },
     { en: 'Alt', ru: 'Alt', caseUpEn: 'Alt', caseUpRu: 'Alt', className: 'AltRight', classNameSpecial: 'special-key' },
     { en: '', ru: '', caseUpEn: '', caseUpRu: '', className: 'ArrowLeft', classNameSpecial: 'special-key' },
     { en: '', ru: '', caseUpEn: '', caseUpRu: '', className: 'ArrowDown', classNameSpecial: 'special-key' },
