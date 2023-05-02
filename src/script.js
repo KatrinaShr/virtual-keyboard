@@ -97,10 +97,10 @@ function initKeyboard() {
   addDescription.innerHTML = 'Keyboard created in the <strong> Windows </strong> operating system.';
   document.querySelector('section').append(addDescription);
 
-  const addlanguage = document.createElement('p');
-  addlanguage.classList.add('language');
-  addlanguage.innerHTML = 'To switch the language combination: <strong> left ctrl + alt</strong>.';
-  document.querySelector('section').append(addlanguage);
+  const addLanguage = document.createElement('p');
+  addLanguage.classList.add('language');
+  addLanguage.innerHTML = 'To switch the language combination: <strong> left ctrl + alt</strong>.';
+  document.querySelector('section').append(addLanguage);
 }
 
 function showNamesKey() {
@@ -244,7 +244,7 @@ function operationTab(posStart, posEnd) {
   }
 }
 
-function operationUpDownLeftRight(code, posStart, posEnd) {
+function operationUpDownLeftRight(code, posStart) {
   if (code === 'ArrowUp') { textarea.value = `${textarea.value.slice(0, posStart)}\u25B2${textarea.value.slice(posStart)}`; }
   if (code === 'ArrowDown') { textarea.value = `${textarea.value.slice(0, posStart)}\u25BC${textarea.value.slice(posStart)}`; }
   if (code === 'ArrowLeft') { textarea.value = `${textarea.value.slice(0, posStart)}\u25C0${textarea.value.slice(posStart)}`; }
@@ -258,7 +258,6 @@ function processingKey() {
   const posEnd = textarea.selectionEnd;
 
   const code = this.getAttribute('id');
-  const keyDownDiv = document.querySelector(`.${code}`);
   const keyDown = document.querySelector(`.${code} .${lang} .${variantsImgKey}`);
 
   textarea.focus();
@@ -273,7 +272,7 @@ function processingKey() {
   } else if (code === 'Tab') {
     operationTab(posStart, posEnd);
   } else if (code === 'ArrowUp' || code === 'ArrowDown' || code === 'ArrowLeft' || code === 'ArrowRight') {
-    operationUpDownLeftRight(code, posStart, posEnd);
+    operationUpDownLeftRight(code, posStart);
   } else if (code === 'CapsLock') {
     if (variantsImgKey === 'caps') {
       variantsImgKey = 'caseDown';
@@ -289,10 +288,9 @@ function processingKey() {
 }
 
 key.forEach((element) => {
-  element.addEventListener('mousedown', function (event) {
+  element.addEventListener('mousedown', (event) => {
     const code = event.currentTarget.getAttribute('id');
-    if (code === 'CapsLock') { document.getElementById(`${code}`).classList.toggle('active'); }
-    else { document.getElementById(`${code}`).classList.add('active'); }
+    if (code === 'CapsLock') { document.getElementById(`${code}`).classList.toggle('active'); } else { document.getElementById(`${code}`).classList.add('active'); }
     processingKey.call(this);
   });
 
@@ -307,13 +305,11 @@ key.forEach((element) => {
 
 const pressed = new Set();
 const changeLang = ['ControlLeft', 'AltLeft'];
-const changeCaseUp = ['Shift'];
 
 document.addEventListener('keydown', (event) => {
   event.preventDefault();
   processingKey.call(document.querySelector(`.${event.code}`));
-  if (event.code === 'CapsLock') { document.querySelector(`.${event.code}`).classList.toggle('active'); }
-  else { document.querySelector(`.${event.code}`).classList.add('active'); }
+  if (event.code === 'CapsLock') { document.querySelector(`.${event.code}`).classList.toggle('active'); } else { document.querySelector(`.${event.code}`).classList.add('active'); }
 
   if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
     if (variantsImgKey === 'caps') {
@@ -324,8 +320,9 @@ document.addEventListener('keydown', (event) => {
     showNamesKey();
   } else if (event.code === 'ControlLeft' || event.code === 'AltLeft') {
     pressed.add(event.code);
-    for (let key of changeLang) {
-      if (!pressed.has(key)) {
+
+    for (const keyItem of changeLang) {
+      if (!pressed.has(keyItem)) {
         return;
       }
     }

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ./js",
-    "lint:fix": "eslint ./js --fix",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix",
     "scss": "sass --watch styles/index.scss styles/main.css"
   },
   "repository": {
