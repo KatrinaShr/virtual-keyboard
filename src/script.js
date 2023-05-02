@@ -262,7 +262,6 @@ function processingKey() {
   const keyDown = document.querySelector(`.${code} .${lang} .${variantsImgKey}`);
 
   textarea.focus();
-
   if (code === 'Backspace') {
     operationBackspace(posStart, posEnd);
   } else if (code === 'Delete') {
