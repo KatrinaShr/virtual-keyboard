@@ -321,8 +321,8 @@ document.addEventListener('keydown', (event) => {
   } else if (event.code === 'ControlLeft' || event.code === 'AltLeft') {
     pressed.add(event.code);
 
-    for (const keyItem of changeLang) {
-      if (!pressed.has(keyItem)) {
+    for (let i = 0; i < changeLang.length; i += 1) {
+      if (!pressed.has(changeLang[i])) {
         return;
       }
     }
