@@ -12,7 +12,7 @@ const letters = [
     { en: '0', ru: '0', caseUpEn: ')', caseUpRu: ')', className: 'Digit0' },
     { en: '-', ru: '-', caseUpEn: '_', caseUpRu: '_', className: 'Minus' },
     { en: '=', ru: '=', caseUpEn: '+', caseUpRu: '+', className: 'Equal' },
-    { en: 'Backspace', ru: 'Backspace', caseUpEn: '', caseUpRu: '', className: 'Backspace', classNameSpecial: 'special-key' }],
+    { en: 'Backspace', ru: 'Backspace', caseUpEn: 'Backspace', caseUpRu: 'Backspace', className: 'Backspace', classNameSpecial: 'special-key' }],
 
   [{ en: 'Tab', ru: 'Tab', caseUpEn: 'Tab', caseUpRu: 'Tab', className: 'Tab', classNameSpecial: 'special-key' },
     { en: 'q', ru: 'й', caseUpEn: 'Q', caseUpRu: 'Й', className: 'KeyQ' },
@@ -44,7 +44,7 @@ const letters = [
     { en: "'", ru: "э", caseUpEn: '"', caseUpRu: 'Э', className: 'Quote' },
     { en: 'Enter', ru: 'Enter', caseUpEn: 'Enter', caseUpRu: 'Enter', className: 'Enter', classNameSpecial: 'special-key' }],
 
-  [{ en: 'Shift', ru: 'Shift', className: 'ShiftLeft', classNameSpecial: 'special-key' },
+  [{ en: 'Shift', ru: 'Shift', caseUpEn: 'Shift', caseUpRu: 'Shift', className: 'ShiftLeft', classNameSpecial: 'special-key' },
     { en: 'z', ru: 'я', caseUpEn: 'Z', caseUpRu: 'Я', className: 'KeyZ' },
     { en: 'x', ru: 'ч', caseUpEn: 'X', caseUpRu: 'Ч', className: 'KeyX' },
     { en: 'c', ru: 'с', caseUpEn: 'C', caseUpRu: 'С', className: 'KeyC' },

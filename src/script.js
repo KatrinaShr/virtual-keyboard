@@ -78,7 +78,7 @@ function initKeyboard() {
           addSpanCaps.innerText = addKey.classList.contains('special-key') ? addSpanCaseDown.innerText : addSpanCaseDown.innerText.toUpperCase();
           addSpanCaps.classList.add('caps');
 
-          addSpanShiftCaps.innerText = addSpanCaseUp.innerText.toLowerCase();
+          addSpanShiftCaps.innerText = addKey.classList.contains('special-key') ? addSpanCaseUp.innerText : addSpanCaseUp.innerText.toLowerCase();
           addSpanShiftCaps.classList.add('shiftCaps');
 
           addKey.appendChild(addSpanContainer);
@@ -315,27 +315,45 @@ document.addEventListener('keydown', (event) => {
   if (event.code === 'CapsLock') { document.querySelector(`.${event.code}`).classList.toggle('active'); }
   else { document.querySelector(`.${event.code}`).classList.add('active'); }
 
-  pressed.add(event.code);
-
-  for (let key of changeLang) {
-    if (!pressed.has(key)) {
-      return;
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+    if (variantsImgKey === 'caps') {
+      variantsImgKey = 'shiftCaps';
+    } else {
+      variantsImgKey = 'caseUp';
     }
+    showNamesKey();
+  } else if (event.code === 'ControlLeft' || event.code === 'AltLeft') {
+    pressed.add(event.code);
+    for (let key of changeLang) {
+      if (!pressed.has(key)) {
+        return;
+      }
+    }
+
+    pressed.clear();
+
+    if (lang === 'en') {
+      lang = 'ru';
+    } else { lang = 'en'; }
+
+    showNamesKey();
   }
-
-  pressed.clear();
-
-  if (lang === 'en') {
-    lang = 'ru';
-  } else { lang = 'en'; }
-
-  showNamesKey();
 });
 
 document.addEventListener('keyup', (event) => {
   event.preventDefault();
+  pressed.delete(event.code);
+
+  if (event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
+    if (variantsImgKey === 'shiftCaps') {
+      variantsImgKey = 'caps';
+    } else {
+      variantsImgKey = 'caseDown';
+    }
+    showNamesKey();
+  }
+
   if (event.code !== 'CapsLock') {
     document.querySelector(`.${event.code}`).classList.remove('active');
   }
-  pressed.delete(event.code);
 });
