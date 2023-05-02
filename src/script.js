@@ -311,6 +311,8 @@ const changeLang = ['ControlLeft', 'AltLeft'];
 const changeCaseUp = ['Shift'];
 
 document.addEventListener('keydown', (event) => {
+  processingKey.call(document.querySelector(`.${event.code}`));
+  event.preventDefault();
   if (event.code === 'CapsLock') { document.querySelector(`.${event.code}`).classList.toggle('active'); }
   else { document.querySelector(`.${event.code}`).classList.add('active'); }
 
@@ -329,14 +331,12 @@ document.addEventListener('keydown', (event) => {
   } else { lang = 'en'; }
 
   showNamesKey();
-  event.preventDefault();
-  processingKey.call(document.querySelector(`.${event.code}`));
 });
 
 document.addEventListener('keyup', (event) => {
+  event.preventDefault();
   if (event.code !== 'CapsLock') {
     document.querySelector(`.${event.code}`).classList.remove('active');
   }
   pressed.delete(event.code);
-  event.preventDefault();
 });
