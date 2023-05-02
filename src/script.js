@@ -311,8 +311,8 @@ const changeLang = ['ControlLeft', 'AltLeft'];
 const changeCaseUp = ['Shift'];
 
 document.addEventListener('keydown', (event) => {
-  processingKey.call(document.querySelector(`.${event.code}`));
   event.preventDefault();
+  processingKey.call(document.querySelector(`.${event.code}`));
   if (event.code === 'CapsLock') { document.querySelector(`.${event.code}`).classList.toggle('active'); }
   else { document.querySelector(`.${event.code}`).classList.add('active'); }
 
