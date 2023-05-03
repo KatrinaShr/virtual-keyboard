@@ -256,7 +256,6 @@ function operationUpDownLeftRight(code, posStart) {
 function processingKey() {
   const posStart = textarea.selectionStart;
   const posEnd = textarea.selectionEnd;
-
   const code = this.getAttribute('id');
   const keyDown = document.querySelector(`.${code} .${lang} .${variantsImgKey}`);
 
